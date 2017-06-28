@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="C:\Users\prosk\Desktop\masterb-master-master\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="e7caf2b1c0aa66465ed7ea4a3c966c757b9a7271">
+        <dex dex="C:\Users\prosk\Desktop\masterb-master-master\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_d39b752d8bbfce0a49a7a53f87da131d940c4501\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\prosk\Desktop\masterb-master-master\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="510aa6efc159983dfbffa676a0dae37568c0a46f">
+        <dex dex="C:\Users\prosk\Desktop\masterb-master-master\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_897517d45a2226320ed3948034a01762a21150e7\classes.dex" />
+    </item>
+
+</items>
