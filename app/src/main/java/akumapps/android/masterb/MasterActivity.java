@@ -33,7 +33,7 @@ public class MasterActivity extends AppCompatActivity {
     private TextView depense;
     private ArrayAdapter<String> adapter ;
     private ArrayList<String> listDepense ;
-
+    private String mescouiilles;
 
 
     private String fileName = "montantCourant";
