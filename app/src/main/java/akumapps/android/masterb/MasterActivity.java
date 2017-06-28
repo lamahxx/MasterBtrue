@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
@@ -33,7 +34,9 @@ public class MasterActivity extends AppCompatActivity {
     private TextView depense;
     private ArrayAdapter<String> adapter ;
     private ArrayList<String> listDepense ;
-    private String mescouiilles;
+    private ArrayAdapter<String> adapter2;
+    private ArrayList<String> fileListDepense;
+
 
 
     private String fileName = "montantCourant";
@@ -113,7 +116,7 @@ public class MasterActivity extends AppCompatActivity {
 
                 setText(montantTotal,montantTotalI.toString(), MODE_PRIVATE);
                 addToList(montantIString, nomDepense.getText().toString());
-                //setList(listDepense, MODE_PRIVATE);
+                setList(listDepense, MODE_PRIVATE);
                 montant.setText(null);
                 nomDepense.setText(null);
             }
@@ -166,6 +169,9 @@ public class MasterActivity extends AppCompatActivity {
         listDepense = new ArrayList<String>();
         adapter = new ArrayAdapter<String>(getApplicationContext(),
                 android.R.layout.simple_list_item_1,listDepense);
+        fileListDepense = new ArrayList<String>();
+        adapter2 = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, fileListDepense);
+
 
 
         //chargement du montant total
@@ -205,10 +211,10 @@ public class MasterActivity extends AppCompatActivity {
             lineList=brList.readLine();
             while (lineList != null)
             {
-                listDepense.add(lineList);
+                fileListDepense.add(lineList);
                 lineList=brList.readLine();
             }
-            mListView.setAdapter(adapter);
+            mListView.setAdapter(adapter2);
 
         }
         catch(java.io.IOException e)
@@ -243,12 +249,12 @@ public class MasterActivity extends AppCompatActivity {
     private void setList(ArrayList<String> listDepense, int mode){
         try{
             FileOutputStream fosList = openFileOutput(fileNameList, mode);
-            PrintWriter pw= new PrintWriter(new OutputStreamWriter(fosList));
+            PrintWriter pww = new PrintWriter(new OutputStreamWriter(fosList));
 
             while (listDepense!=null){
-                pw.print(listDepense);
+                pww.print(listDepense);
             }
-            pw.close();
+            pww.close();
 
 
         }
