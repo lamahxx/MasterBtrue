@@ -2,22 +2,139 @@
 <items version="2" >
 
     <item
-        is-multidex="true"
-        jar="C:\Users\prosk\Desktop\MasterBtrue-master\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\prosk\.android\build-cache\f38d7e3092286ec93f90d92cdff32e5c62caf9d8\output\jars\classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
-        sha1="190fbd9e4b92a1eda72f2029908cc9a650307376">
-        <dex dex="C:\Users\prosk\Desktop\MasterBtrue-master\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_e0ce4688efb87d543053554742796ebac2a3499a\classes.dex" />
+        sha1="efb8cb62d47d157c29d1521daac7eefd4cb881ee">
+        <dex dex="C:\Users\prosk\Desktop\masterb-master-master\MasterBtrue\app\build\intermediates\pre-dexed\debug\classes_885c85ebf93b05af67435fda79ae863f66addb87.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\prosk\Desktop\MasterBtrue-master\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\prosk\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\25.3.1\support-annotations-25.3.1.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
-        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
-        <dex dex="C:\Users\prosk\Desktop\MasterBtrue-master\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_6b4ef08edcd4abbbbb63d680537c692f7bb9a434\classes.dex" />
+        sha1="bf8841d29fa39e077730e7a91222c2ce269fa7c9">
+        <dex dex="C:\Users\prosk\Desktop\masterb-master-master\MasterBtrue\app\build\intermediates\pre-dexed\debug\support-annotations-25.3.1_26c0d73b398181c6980284174e5aed8dbeded17c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\prosk\.android\build-cache\c0f8c0480a1a86e655f54db7d0e6571ca23d198a\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="d4cf6227dd6a2ceff0f7dcf0c324380b7abf2c28">
+        <dex dex="C:\Users\prosk\Desktop\masterb-master-master\MasterBtrue\app\build\intermediates\pre-dexed\debug\classes_70550cc3b6938b8bc9627fa55d48dfc1d889ea97.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\prosk\.android\build-cache\d8578925454b7adbfc9d7ea490fc2a01d38c1470\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="da27a32db6af8954ee8061537c7d476fcb1df46f">
+        <dex dex="C:\Users\prosk\Desktop\masterb-master-master\MasterBtrue\app\build\intermediates\pre-dexed\debug\classes_386389c0417dc2c80dcad45cff8bf4a1ec2a7447.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\prosk\.android\build-cache\c6b4819e0d81104b7d0697c9d224cac66276f67c\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="C:\Users\prosk\Desktop\masterb-master-master\MasterBtrue\app\build\intermediates\pre-dexed\debug\classes_0d52792234ef80f2238cf38c7b15bfd992e3bfd0.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\prosk\.android\build-cache\22a1c16fefb3cb5afb75e148665e5757f724e329\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="95519720620b553f63afc789beba9ad582807f7c">
+        <dex dex="C:\Users\prosk\Desktop\masterb-master-master\MasterBtrue\app\build\intermediates\pre-dexed\debug\classes_ac5aa3586eb9c970d2136c959da9bdfdc1d3f666.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\prosk\.android\build-cache\9faab3933e8993919249e044c40d7097596cfed9\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="47635644d0d5c103c1dd8360549eb9ba3225c7d3">
+        <dex dex="C:\Users\prosk\Desktop\masterb-master-master\MasterBtrue\app\build\intermediates\pre-dexed\debug\classes_2997251f2eb34e9fbf448826dd670b02cc020c34.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\prosk\.android\build-cache\5807c698ba95d59c6e0e0745573a8a587b847102\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="4a26a1154d053ab11aaf4c3967c42a4d66390991">
+        <dex dex="C:\Users\prosk\Desktop\masterb-master-master\MasterBtrue\app\build\intermediates\pre-dexed\debug\classes_134706d296777e76ec6b863ea83816e089b9773c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\prosk\.android\build-cache\064120576067bfbfeee22ae34394664d606d0c49\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="150252b33b00274cc868578ade018fda0d43a3eb">
+        <dex dex="C:\Users\prosk\Desktop\masterb-master-master\MasterBtrue\app\build\intermediates\pre-dexed\debug\classes_65a5e8c14b1fb8ee9f3cb008a9de5c3a836d5fce.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\prosk\.android\build-cache\b1e6e8aeabd8d45aa2e46984f7a868d47834c122\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="6ef31f1555bb4cc513ec8d52711365a8b89f3600">
+        <dex dex="C:\Users\prosk\Desktop\masterb-master-master\MasterBtrue\app\build\intermediates\pre-dexed\debug\classes_0255aa60cdee46eddcf1daeeedbfd4de7efc6265.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\prosk\.android\build-cache\7861a015067ebe7760280334d244a0e35b6383ff\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="45f697922e6f072daa12f8a2995dc77ab03c11da">
+        <dex dex="C:\Users\prosk\Desktop\masterb-master-master\MasterBtrue\app\build\intermediates\pre-dexed\debug\classes_6247eecc234254e948c0cb835054666f9dd1ba09.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\prosk\.android\build-cache\ea9e8be3c641c598a40d37b77d18f2d9e50bba72\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="44ee06abb66da30f5855e6bf54574e64cdcd982a">
+        <dex dex="C:\Users\prosk\Desktop\masterb-master-master\MasterBtrue\app\build\intermediates\pre-dexed\debug\classes_8687200eea7d690127e975490f241019d9980f12.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\prosk\.android\build-cache\a931866a9f3602c2d1cca3b33fd5db624840ad85\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="052f5f840f21174a3ecf6544130194e2652cbb73">
+        <dex dex="C:\Users\prosk\Desktop\masterb-master-master\MasterBtrue\app\build\intermediates\pre-dexed\debug\classes_9764d911af3f0ef57ab0c975dfd2be0133c6bfc8.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\prosk\AppData\Local\Android\sdk\extras\m2repository\com\android\support\constraint\constraint-layout-solver\1.0.2\constraint-layout-solver-1.0.2.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="b9cd8fc6bd15cb915735d34535db30ece0c44603">
+        <dex dex="C:\Users\prosk\Desktop\masterb-master-master\MasterBtrue\app\build\intermediates\pre-dexed\debug\constraint-layout-solver-1.0.2_4ea0d8857dea8ff54cd8a51d88da5694dac3ca66.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\prosk\.android\build-cache\263283088aad1592f2d44ff4e6aeaea3d21701cc\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="38789e20ace9ab7dbd00554bd2673ab424478d3b">
+        <dex dex="C:\Users\prosk\Desktop\masterb-master-master\MasterBtrue\app\build\intermediates\pre-dexed\debug\classes_07554d291e0479f95e5292fb1c7fbb89ff16eda0.jar" />
     </item>
 
 </items>
