@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+android:layout_height="match_parent" android:paddingLeft="16dp"
+android:paddingRight="50dp"
+android:paddingTop="16dp"
+android:paddingBottom="16dp" tools:context="akumapps.android.masterb.Bilan"
+android:orientation="horizontal">
+
+<Spinner
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/spinner2"
+    android:background="@android:drawable/btn_dropdown"
+    android:spinnerMode="dropdown"/>
+<LinearLayout android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textTotal"
+        android:text="Total des Dépenses:"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/total"
+        android:text="BABYLONE APPROCHE"
+        android:textColor="@android:color/holo_red_light"/>
+
+</LinearLayout>
+
+
+
+
+
+
+</TableLayout>
+

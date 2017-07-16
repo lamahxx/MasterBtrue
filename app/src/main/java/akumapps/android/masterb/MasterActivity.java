@@ -1,6 +1,7 @@
 package akumapps.android.masterb;
 
 import android.content.ClipData;
+import android.content.Intent;
 import android.graphics.Color;
 import android.icu.text.TimeZoneNames;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -31,6 +34,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.TimeZone;
 
 
@@ -45,7 +49,8 @@ public class MasterActivity extends AppCompatActivity {
     private float depenseInutilesTriggerer;
 
 
-
+    private Date semaine [];
+    private Date mois [];
 
 
     private String fileName = "montantCourant";
@@ -59,6 +64,7 @@ public class MasterActivity extends AppCompatActivity {
 
 
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_master);
@@ -72,6 +78,8 @@ public class MasterActivity extends AppCompatActivity {
         final Button buttonAdd= (Button) findViewById(R.id.buttonAdd);
         buttonAdd.setOnClickListener(OnClickAdd());
 
+        final Button buttonBilan= (Button) findViewById(R.id.bilan);
+        buttonBilan.setOnClickListener(OnClickBilan());
 
         final Button reset = (Button) findViewById(R.id.reset);
         reset.setOnClickListener(OnClickReset());
@@ -111,7 +119,8 @@ public class MasterActivity extends AppCompatActivity {
                 if( montantI > 9999999 | montantI< 0)
                 {
                     montantI = 0.0f;
-                    Toast toast = Toast.makeText(getApplicationContext(), "T'es pas si riche !", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "T'es pas si riche !", Toast.LENGTH_SHORT);
                     toast.show();
                 }
 
@@ -126,15 +135,33 @@ public class MasterActivity extends AppCompatActivity {
                 Float montantTotalI= Float.parseFloat(montantTotalString);
 
                 montantTotalI+=montantI;
-
-                setText(montantTotal,montantTotalI.toString(), MODE_PRIVATE);
-                if(montantIString.isEmpty() || nomDepense.getText().toString().isEmpty() || montantIString.equals("0.0"))
+                if(dropdown.getSelectedItem().toString().equals("DEPENSE INUTILE"))
                 {
-                    Toast toast = Toast.makeText(getApplicationContext(), "Faut tout remplir Negrillon", Toast.LENGTH_SHORT);
+                    depenseInutiles+= montantI;
+                }
+                if(depenseInutiles >= depenseInutilesTriggerer)
+                {
+
+                    Toast toast = new Toast(getApplicationContext());
+                    ImageView view = new ImageView(getApplicationContext());
+                    view.setImageResource(R.drawable.logo);
+                    toast.setView(view);
+                    toast.show();
+                    //Toast test1 = Toast.makeText(getApplicationContext(),
+                    // "ATTENTION LA C EST CHAUD", Toast.LENGTH_LONG);
+                    //test1.show();
+                }
+                setText(montantTotal,montantTotalI.toString(), MODE_PRIVATE);
+                if(montantIString.isEmpty() || nomDepense.getText().toString().isEmpty() ||
+                        montantIString.equals("0.0"))
+                {
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "Faut tout remplir Negrillon", Toast.LENGTH_SHORT);
                     toast.show();
                 }
                 else {
-                    addToList(montantIString, nomDepense.getText().toString(), dropdown.getSelectedItem().toString() );
+                    addToList(montantIString, nomDepense.getText().toString(),
+                            dropdown.getSelectedItem().toString() );
                     setList(listDepense, MODE_PRIVATE);
                     montant.setText(null);
                     nomDepense.setText(null);
@@ -193,6 +220,22 @@ public class MasterActivity extends AppCompatActivity {
 
 
 
+    public View.OnClickListener OnClickBilan() {
+        View.OnClickListener on = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MasterActivity.this, Bilan.class);
+                startActivity(intent);
+            }
+
+        };
+        return on;
+    }
+
+
+
+
+
     //********************FONCTIONS********************//
     //************************************************//
     //***********************************************//
@@ -215,9 +258,10 @@ public class MasterActivity extends AppCompatActivity {
         dropdown = (Spinner)findViewById(R.id.spinner1);
         String[] items = new String[]{"COURSES", "BIERES", "CLOPES", "DEPENSE INUTILE"};
 
-        ArrayAdapter<String> adapterSpinner = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        ArrayAdapter<String> adapterSpinner = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_dropdown_item, items);
         dropdown.setAdapter(adapterSpinner);
-
+        depenseInutilesTriggerer = 500;
 
         //Chargement du montant total
         try
