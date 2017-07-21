@@ -2,7 +2,9 @@
     <string name="app_name">masterb</string>
     <string name="action_settings">Settings</string>
     <string name="buttonAdd">Add</string>
-    <string name="reset">RESET TO OBLIVION</string>
+    <string name="reset">RESET</string>
     <string name="spinner1">Spinner</string>
     <string name="bilan">Bilan</string>
+    <string name="notEnough">T\es pas si riche</string>
+    <string name="parametres">Paramètres</string>
 </resources>
