@@ -1,5 +1,6 @@
 package akumapps.android.masterb.Resources;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -13,7 +14,9 @@ public class Depense {
 
     private Float montantDepense;
     private String libelleDepense;
-    private Date dateDepense ;
+    private int day ;
+    private int month;
+    private int year;
 
 
 
@@ -23,10 +26,12 @@ public class Depense {
 
 
 
-    public Depense(Float mD, String ld, Date dp) {
-            montantDepense=mD;
-            libelleDepense=ld;
-            dateDepense=dp;
+    public Depense(Float mD, String ld, int d, int m, int y) {
+        montantDepense=mD;
+        libelleDepense=ld;
+        day=d;
+        month=m;
+        year=y;
     }
 
     public Float getMontantDepense() {
@@ -45,16 +50,34 @@ public class Depense {
         this.libelleDepense = libelleDepense;
     }
 
-    public Date getDateDepense() {
-        return dateDepense;
+    public int getDay() {
+        return day;
     }
 
-    public void setDateDepense(Date dateDepense) {
-        this.dateDepense = dateDepense;
+    public void setDay(int day) {
+        this.day = day;
     }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
 
     public String toString()
     {
-        return montantDepense.toString()+" "+libelleDepense+" "+dateDepense;
+
+        return montantDepense.toString()+" "+libelleDepense+" "+day+"/"+ month +"/"+year;
     }
 }

@@ -42,12 +42,15 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.lang.reflect.Array;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 import java.util.logging.Logger;
 
 import akumapps.android.masterb.Resources.Depense;
+import akumapps.android.masterb.Resources.FormatDate;
 
 
 public class MasterActivity extends AppCompatActivity {
@@ -58,16 +61,17 @@ public class MasterActivity extends AppCompatActivity {
     private ArrayList<Depense> listDepense ;
     private Spinner dropdown;
     private float depenseInutiles;
-    private float depenseInutilesTriggerer;
-    private String statePref;
     ArrayList<String> finalItems = new ArrayList<>();
 
-    private String fileNameSpinner = "listSpinner";
+
+
     private String fileName = "montantCourant";
     private String fileNameList = "listDepense";
-    private String fileNameStatePref = "fileStatePref";
 
-    File fileTest = new File("testSpinner");
+
+    private String spinnerFill;
+
+
 
 
     //*******************MAIN********************//
@@ -75,14 +79,13 @@ public class MasterActivity extends AppCompatActivity {
     //*****************************************//
 
 
-    @Override
 
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_master);
 
 
-        depenseInutilesTriggerer = 500.0f;
         initScreen();
 
         // Find the toolbar view inside the activity layout
@@ -104,52 +107,7 @@ public class MasterActivity extends AppCompatActivity {
 
 
 
-
-
-
-
-
-
-
-
-        String test = "COUCOU";
-        String filepath = fileTest.getPath();
-
-        try {
-            FileOutputStream fosTest  = openFileOutput(filepath,MODE_PRIVATE);
-            PrintWriter pw = new PrintWriter(fosTest);
-            pw.print(test);
-            pw.close();
-        }
-        catch(java.io.FileNotFoundException ex) {
-            ex.getMessage();
-
-        }
-
-        TextView textTest = (TextView) findViewById(R.id.testView);
-
-        try{
-            FileInputStream fisTest = openFileInput(filepath);
-            BufferedReader br = new BufferedReader(new InputStreamReader(fisTest));
-            String textfile;
-            textfile = br.readLine();
-            textTest.setText(textfile);
-            fisTest.close();
-
-        }
-        catch(java.io.IOException e)
-        {
-            e.getMessage();
-        }
-
-
-
-
-
-
     }
-
-
 
 
 
@@ -209,18 +167,6 @@ public class MasterActivity extends AppCompatActivity {
                     depenseInutiles+= montantI;
                 }
 
-                if(depenseInutiles >= depenseInutilesTriggerer)
-                {
-
-                    Toast toast = new Toast(getApplicationContext());
-                    ImageView view = new ImageView(getApplicationContext());
-                    view.setImageResource(R.drawable.logo);
-                    toast.setView(view);
-                    toast.show();
-                    //Toast test1 = Toast.makeText(getApplicationContext(),
-                    // "ATTENTION LA C EST CHAUD", Toast.LENGTH_LONG);
-                    //test1.show();
-                }
                 setText(montantTotal,montantTotalI.toString(), MODE_PRIVATE);
                 if(montantIString.isEmpty() || montantIString.equals("0.0"))
                 {
@@ -229,9 +175,12 @@ public class MasterActivity extends AppCompatActivity {
                     toast.show();
                 }
                 else {
-                    addToList(montantI, dropdown.getSelectedItem().toString());
+
+                    FormatDate fdate = new FormatDate();
+                    addToList(montantI, dropdown.getSelectedItem().toString(),fdate.date);
                     setList(listDepense, MODE_PRIVATE);
                     montant.setText(null);
+
                 }
             }
 
@@ -292,10 +241,10 @@ public class MasterActivity extends AppCompatActivity {
     //***********************************************//
 
 
-    private void addToList(Float montantI, String libelle ) {
+    private void addToList(Float montantI, String libelle,String date) {
 
-
-            Depense a = new Depense(montantI, libelle,new Date());
+            String tabDate[] = parseDate(date);
+            Depense a = new Depense(montantI, libelle,Integer.parseInt(tabDate[0]),Integer.parseInt(tabDate[1]),Integer.parseInt(tabDate[2]));
             listDepense.add(a);
             mListView.setAdapter(adapter);
 
@@ -303,11 +252,16 @@ public class MasterActivity extends AppCompatActivity {
 
     }
 
-    private void initScreen() {
+    private String[] parseDate(String date) {
+
+         return date.split(";");
+    }
+
+    public void initScreen() {
 
         //Init des variables
 
-        depenseInutilesTriggerer = 500;
+
         mListView = (ListView) findViewById(R.id.list);
         depense = (TextView) findViewById(R.id.montantTotal);
         listDepense = new ArrayList<Depense>();
@@ -345,6 +299,9 @@ public class MasterActivity extends AppCompatActivity {
         }
 
 
+
+
+
         //Chargement tableau finalItems à partir du tableau obtenu par la lecture du fichier resource spinner_fr
 
         int p = 0;
@@ -354,9 +311,12 @@ public class MasterActivity extends AppCompatActivity {
         }
 
 
-        //Lecture du fichier fileNameSpinner
+        //Lecture du fichier fileNameSpinner pour charger complètement finalItems.
+
+        spinnerFill = getString(R.string.fileName);
+
         try{
-            FileInputStream fileInputSpinnerPref = openFileInput(fileNameSpinner);
+            FileInputStream fileInputSpinnerPref = openFileInput(spinnerFill);
             BufferedReader brSpinnerPref = new BufferedReader(new InputStreamReader(fileInputSpinnerPref));
 
             String lineSpinner;
@@ -370,7 +330,7 @@ public class MasterActivity extends AppCompatActivity {
             brSpinnerPref.close();
         }
         catch(java.io.IOException e){
-            e.getMessage();
+            Toast.makeText(this,e.getMessage(),Toast.LENGTH_LONG);
         }
 
 
@@ -424,7 +384,11 @@ public class MasterActivity extends AppCompatActivity {
             {
 
                 String tabList[] = lineList.split(" ");
-                Depense d = new Depense(Float.parseFloat(tabList[0]), tabList[1], new Date());
+
+                Depense d = new Depense(Float.parseFloat(tabList[0]), tabList[1],
+                        Integer.parseInt(tabList[2].split("/")[0]),
+                        Integer.parseInt(tabList[2].split("/")[1]),
+                        Integer.parseInt(tabList[2].split("/")[2]));
                 listDepense.add(d);
                 lineList=brList.readLine();
             }
@@ -461,7 +425,7 @@ public class MasterActivity extends AppCompatActivity {
         }
 
     }
-            //ENREGISTREMENT DE LA LISTE DANS LE FICHIER
+            //ENREGISTREMENT DE LA LISTE DANS LE FICHIER fileNameList
 
     private void setList(ArrayList<Depense> listDepense, int mode){
         try{
@@ -541,8 +505,8 @@ public class MasterActivity extends AppCompatActivity {
 
             Intent intentParametres = new Intent(MasterActivity.this, Parameters.class);
             intentParametres.putExtra("string-array", finalItems);
+            initScreen();
             startActivity(intentParametres);
-
             return true;
         }
 

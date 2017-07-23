@@ -7,4 +7,5 @@
     <string name="bilan">Bilan</string>
     <string name="notEnough">T\es pas si riche</string>
     <string name="parametres">Paramètres</string>
+    <string name="fileName">fileNameSpinner</string>
 </resources>
