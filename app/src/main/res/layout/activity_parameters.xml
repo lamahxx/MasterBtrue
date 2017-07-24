@@ -24,7 +24,13 @@
         android:id="@+id/addSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ajouter catégorie"/>
+        android:text="@string/addCat"/>
+
+    <Button
+        android:id="@+id/resetSpinner"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="@string/reset"/>
 
 
 

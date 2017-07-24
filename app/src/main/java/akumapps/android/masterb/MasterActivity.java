@@ -56,21 +56,19 @@ import akumapps.android.masterb.Resources.FormatDate;
 public class MasterActivity extends AppCompatActivity {
 
     private ListView mListView;
-    private TextView depense;
     private ArrayAdapter<Depense> adapter ;
     private ArrayList<Depense> listDepense ;
     private Spinner dropdown;
     private float depenseInutiles;
     ArrayList<String> finalItems = new ArrayList<>();
+    TextView depense;
 
 
 
-    private String fileName = "montantCourant";
-    private String fileNameList = "listDepense";
 
-
-    private String spinnerFill;
-
+    String spinnerFill; //fichier
+    String fileNameList;
+    String fileNameMontant_Courant;
 
 
 
@@ -78,7 +76,12 @@ public class MasterActivity extends AppCompatActivity {
     //******************************************//
     //*****************************************//
 
-
+    @Override
+    public void onResume(){
+        super.onResume();
+        // put your code here...
+       // initScreen();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,9 +101,6 @@ public class MasterActivity extends AppCompatActivity {
         final Button buttonAdd= (Button) findViewById(R.id.buttonAdd);
         buttonAdd.setOnClickListener(OnClickAdd());
 
-        final Button buttonBilan= (Button) findViewById(R.id.bilan);
-        buttonBilan.setOnClickListener(OnClickBilan());
-
         final Button reset = (Button) findViewById(R.id.reset);
         reset.setOnClickListener(OnClickReset());
 
@@ -108,12 +108,6 @@ public class MasterActivity extends AppCompatActivity {
 
 
     }
-
-
-
-
-
-
 
 
     //****************BOUTONS**************************//
@@ -131,7 +125,7 @@ public class MasterActivity extends AppCompatActivity {
                 EditText montant= (EditText) findViewById(R.id.montant);
                 TextView montantTotal = (TextView) findViewById(R.id.montantTotal);
 
-
+                Boolean test = false;
 
                 String montantIString=montant.getText().toString();
 
@@ -146,8 +140,9 @@ public class MasterActivity extends AppCompatActivity {
                 {
                     montantI = 0.0f;
                     Toast toast = Toast.makeText(getApplicationContext(),
-                            "T'es pas si riche !", Toast.LENGTH_SHORT);
+                            getString(R.string.notEnough), Toast.LENGTH_SHORT);
                     toast.show();
+                    test = true;
                 }
 
                 String montantTotalString=montantTotal.getText().toString();
@@ -162,26 +157,27 @@ public class MasterActivity extends AppCompatActivity {
 
                 montantTotalI+=montantI;
 
-                if(dropdown.getSelectedItem().toString().equals("DEPENSE INUTILE"))
-                {
-                    depenseInutiles+= montantI;
-                }
-
                 setText(montantTotal,montantTotalI.toString(), MODE_PRIVATE);
+
                 if(montantIString.isEmpty() || montantIString.equals("0.0"))
                 {
+
                     Toast toast = Toast.makeText(getApplicationContext(),
-                            "Faut tout remplir Negrillon", Toast.LENGTH_SHORT);
+                            getString(R.string.emptyEntry), Toast.LENGTH_SHORT);
                     toast.show();
                 }
                 else {
-
-                    FormatDate fdate = new FormatDate();
-                    addToList(montantI, dropdown.getSelectedItem().toString(),fdate.date);
-                    setList(listDepense, MODE_PRIVATE);
-                    montant.setText(null);
-
+                    if (test==true) {
+                        montant.setText(null);
+                    }
+                    else{
+                        FormatDate fdate = new FormatDate();
+                        addToList(montantI, dropdown.getSelectedItem().toString(), fdate.date);
+                        setList(listDepense, MODE_PRIVATE);
+                        montant.setText(null);
+                    }
                 }
+
             }
 
 
@@ -200,7 +196,7 @@ public class MasterActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 //Ouverture et fermeture du fichier pour effacer le fichier : MONTANT TOTAL
-                resetFile(fileName, MODE_PRIVATE);
+                resetFile(fileNameMontant_Courant, MODE_PRIVATE);
 
                 //On Affiche 0 dans le TEXTVIEW
                 TextView montantTotal= (TextView) findViewById(R.id.montantTotal);
@@ -218,19 +214,7 @@ public class MasterActivity extends AppCompatActivity {
 
     }
 
-//                          BOUTON BILAN
 
-    public View.OnClickListener OnClickBilan() {
-        View.OnClickListener on = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intentBilan = new Intent(MasterActivity.this, Bilan.class);
-                startActivity(intentBilan);
-            }
-
-        };
-        return on;
-    }
 
 
 
@@ -269,6 +253,9 @@ public class MasterActivity extends AppCompatActivity {
                 android.R.layout.simple_list_item_1,listDepense);
         dropdown = (Spinner)findViewById(R.id.spinner1);
         String items[] = new String[]{};
+
+        fileNameList = getString(R.string.fileNameList);
+        fileNameMontant_Courant = getString(R.string.fileNameMontant_Courant);
 
         //Appel dans  resources du fichier spinner_fr
         InputStream inputStream_spinner = getResources().openRawResource(
@@ -313,7 +300,7 @@ public class MasterActivity extends AppCompatActivity {
 
         //Lecture du fichier fileNameSpinner pour charger complètement finalItems.
 
-        spinnerFill = getString(R.string.fileName);
+        spinnerFill = getString(R.string.fileNameSpinner);
 
         try{
             FileInputStream fileInputSpinnerPref = openFileInput(spinnerFill);
@@ -335,8 +322,6 @@ public class MasterActivity extends AppCompatActivity {
 
 
 
-
-
         //Chargement du Spinner
         ArrayAdapter<String> adapterSpinner = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_dropdown_item, finalItems);
@@ -350,7 +335,7 @@ public class MasterActivity extends AppCompatActivity {
         try
         {
 
-            FileInputStream fis = openFileInput(fileName);
+            FileInputStream fis = openFileInput(fileNameMontant_Courant);
             BufferedReader br = new BufferedReader(new InputStreamReader(fis));
 
             String line;
@@ -412,7 +397,7 @@ public class MasterActivity extends AppCompatActivity {
 
         try
         {
-            FileOutputStream fos = openFileOutput(fileName,mode);
+            FileOutputStream fos = openFileOutput(fileNameMontant_Courant,mode);
             PrintWriter pw = new PrintWriter( new OutputStreamWriter(fos));
             pw.print(montantTotalI);
             pw.close();
@@ -504,12 +489,16 @@ public class MasterActivity extends AppCompatActivity {
         {
 
             Intent intentParametres = new Intent(MasterActivity.this, Parameters.class);
-            intentParametres.putExtra("string-array", finalItems);
-            initScreen();
             startActivity(intentParametres);
             return true;
         }
 
+        if(id == R.id.bilan)
+        {
+            Intent intentBilan = new Intent(MasterActivity.this, Bilan.class);
+            startActivity(intentBilan);
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }

@@ -28,10 +28,12 @@ public class Parameters extends AppCompatActivity {
     private String spinnerFill;
     private ArrayList<String> list = new ArrayList();
 
-    @Override
+
+   @Override
     public void onBackPressed() {
        startActivity(new Intent(this,MasterActivity.class));
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +41,7 @@ public class Parameters extends AppCompatActivity {
         setContentView(R.layout.activity_parameters);
 
 
-        spinnerFill = getString(R.string.fileName);
+        spinnerFill = getString(R.string.fileNameSpinner);
 
         initScreenParam();
 
@@ -51,13 +53,42 @@ public class Parameters extends AppCompatActivity {
         final Button addSpinner = (Button) findViewById(R.id.addSpinner);
         addSpinner.setOnClickListener(OnClickAdd());
 
+        final Button resetSpinner = (Button) findViewById(R.id.resetSpinner);
+        resetSpinner.setOnClickListener(onClickReset_spinner());
+
 
     }
+
+
 
     /*                                                                      */
     /*                            BOUTONS                                   */
     /*                                                                      */
     /*                                                                      */
+
+
+    public View.OnClickListener onClickReset_spinner() {
+        View.OnClickListener rs = new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+
+                resetFile(spinnerFill);
+
+            }
+
+            private void resetFile(String spinnerFill) {
+                
+
+            }
+        };
+        return rs;
+    }
+
+
+
+
+
+
 
     public View.OnClickListener OnClickAdd() {
         View.OnClickListener on = new View.OnClickListener() {
@@ -72,7 +103,7 @@ public class Parameters extends AppCompatActivity {
                 System.out.println("LAAAAAAAAAAAA");
 
                 if(userCat.isEmpty()){
-                   Toast.makeText(getApplicationContext(), "Le champ est vide", Toast.LENGTH_LONG).show();
+                   Toast.makeText(getApplicationContext(), getString(R.string.emptyEntry), Toast.LENGTH_LONG).show();
                     editSpinner.setText(null);
                 }
                 else {
@@ -108,6 +139,9 @@ public class Parameters extends AppCompatActivity {
     /*                                                                      */
 
     private void initScreenParam() {
+
+
+
         //Appel dans  resources du fichier spinner_fr
         InputStream inputStream_spinner = getResources().openRawResource(
                 getResources().getIdentifier("spinner_fr",
@@ -115,6 +149,12 @@ public class Parameters extends AppCompatActivity {
         dropdown = (Spinner)findViewById(R.id.spinner2);
         adapter = new ArrayAdapter<String>(getBaseContext(),
                 android.R.layout.simple_list_item_1,list);
+
+
+
+
+
+        //Chargement du Spinner initial
         try{
             InputStreamReader fis = new InputStreamReader(inputStream_spinner);
             BufferedReader br = new BufferedReader(fis);
@@ -123,17 +163,35 @@ public class Parameters extends AppCompatActivity {
 
             while (line != null)
             {
-                String test[] = line.split(",");
-                list.add(test[0]);
-                list.add(test[1]);
-                list.add(test[2]);
+                String lineTab[] = line.split(",");
+                list.add(lineTab[0]);
+                list.add(lineTab[1]);
+                list.add(lineTab[2]);
                 line = br.readLine();
             }
-
             br.close();
             dropdown.setAdapter(adapter);
         }
         catch (java.io.IOException e){
+            e.getMessage();
+        }
+        //Chargement du Spinner à partir du fichier fileNameSpinner ( Entrée Utilisateur )
+        try {
+            FileInputStream fis2 = openFileInput(spinnerFill);
+            BufferedReader br2 = new BufferedReader(new InputStreamReader(fis2));
+            String line2;
+            line2 = br2.readLine();
+
+            while (line2!=null)
+            {
+                list.add(line2);
+                line2 = br2.readLine();
+            }
+            br2.close();
+            dropdown.setAdapter(adapter);
+        }
+        catch(java.io.IOException e)
+        {
             e.getMessage();
         }
     }

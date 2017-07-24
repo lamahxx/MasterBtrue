@@ -15,4 +15,9 @@
     android:orderInCategory="100"
     android:title="@string/parametres"
     app:showAsAction="always" />
+    <item
+        android:id="@+id/bilan"
+        android:orderInCategory="100"
+        android:title="@string/bilan"
+        app:showAsAction="always"/>
 </menu>
