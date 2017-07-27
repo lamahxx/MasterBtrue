@@ -59,7 +59,6 @@ public class MasterActivity extends AppCompatActivity {
     private ArrayAdapter<Depense> adapter ;
     private ArrayList<Depense> listDepense ;
     private Spinner dropdown;
-    private float depenseInutiles;
     ArrayList<String> finalItems = new ArrayList<>();
     TextView depense;
 
@@ -80,7 +79,7 @@ public class MasterActivity extends AppCompatActivity {
     public void onResume(){
         super.onResume();
         // put your code here...
-       // initScreen();
+       //initScreen();
     }
 
     @Override
@@ -115,10 +114,10 @@ public class MasterActivity extends AppCompatActivity {
     //***********************************************//
 
 
-    //                      BOUTON ADD
+    /*                      BOUTON ADD                  */
 
     public View.OnClickListener OnClickAdd() {
-        View.OnClickListener on = new View.OnClickListener() {
+        View.OnClickListener x = new View.OnClickListener() {
             @Override
             public void onClick(View v){
 
@@ -131,14 +130,14 @@ public class MasterActivity extends AppCompatActivity {
 
                 if(montantIString.isEmpty())
                 {
-                    montantIString="0.0";
+                    montantIString="0";
                 }
 
 
                 Float montantI= Float.parseFloat(montantIString);
                 if( montantI > 9999999 | montantI< 0)
                 {
-                    montantI = 0.0f;
+                    montantI = 0f;
                     Toast toast = Toast.makeText(getApplicationContext(),
                             getString(R.string.notEnough), Toast.LENGTH_SHORT);
                     toast.show();
@@ -149,7 +148,7 @@ public class MasterActivity extends AppCompatActivity {
 
                 if(montantTotalString.isEmpty())
                 {
-                    montantTotalString="0.0";
+                    montantTotalString="0";
 
                 }
 
@@ -159,7 +158,7 @@ public class MasterActivity extends AppCompatActivity {
 
                 setText(montantTotal,montantTotalI.toString(), MODE_PRIVATE);
 
-                if(montantIString.isEmpty() || montantIString.equals("0.0"))
+                if(montantIString.isEmpty() || montantIString.equals("0"))
                 {
 
                     Toast toast = Toast.makeText(getApplicationContext(),
@@ -167,7 +166,7 @@ public class MasterActivity extends AppCompatActivity {
                     toast.show();
                 }
                 else {
-                    if (test==true) {
+                    if (test) {
                         montant.setText(null);
                     }
                     else{
@@ -182,12 +181,12 @@ public class MasterActivity extends AppCompatActivity {
 
 
         };
-        return on;
+        return x;
     }
 
 
 
-//                          BOUTON RESET
+/*                             BOUTON RESET                */
 
     public View.OnClickListener OnClickReset()
     {
@@ -220,15 +219,17 @@ public class MasterActivity extends AppCompatActivity {
 
 
 
-    //********************FONCTIONS********************//
-    //************************************************//
-    //***********************************************//
+                    //********************FONCTIONS********************//
+                    //************************************************//
+                    //***********************************************//
 
 
     private void addToList(Float montantI, String libelle,String date) {
 
             String tabDate[] = parseDate(date);
-            Depense a = new Depense(montantI, libelle,Integer.parseInt(tabDate[0]),Integer.parseInt(tabDate[1]),Integer.parseInt(tabDate[2]));
+            Depense a = new Depense(montantI, libelle,Integer.parseInt(tabDate[0]),
+                    Integer.parseInt(tabDate[1]),
+                    Integer.parseInt(tabDate[2]));
             listDepense.add(a);
             mListView.setAdapter(adapter);
 
@@ -248,8 +249,8 @@ public class MasterActivity extends AppCompatActivity {
 
         mListView = (ListView) findViewById(R.id.list);
         depense = (TextView) findViewById(R.id.montantTotal);
-        listDepense = new ArrayList<Depense>();
-        adapter = new ArrayAdapter<Depense>(getBaseContext(),
+        listDepense = new ArrayList<>();
+        adapter = new ArrayAdapter<>(getBaseContext(),
                 android.R.layout.simple_list_item_1,listDepense);
         dropdown = (Spinner)findViewById(R.id.spinner1);
         String items[] = new String[]{};
@@ -275,7 +276,7 @@ public class MasterActivity extends AppCompatActivity {
             while (line != null)
             {
                 items  = line.split(",");
-                i++;
+                i = i+i;
                 line = buffreader.readLine();
             }
             buffreader.close();
@@ -317,13 +318,13 @@ public class MasterActivity extends AppCompatActivity {
             brSpinnerPref.close();
         }
         catch(java.io.IOException e){
-            Toast.makeText(this,e.getMessage(),Toast.LENGTH_LONG);
+            Toast.makeText(this,e.getMessage(),Toast.LENGTH_LONG).show();
         }
 
 
 
         //Chargement du Spinner
-        ArrayAdapter<String> adapterSpinner = new ArrayAdapter<String>(this,
+        ArrayAdapter<String> adapterSpinner = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_dropdown_item, finalItems);
         dropdown.setAdapter(adapterSpinner);
 

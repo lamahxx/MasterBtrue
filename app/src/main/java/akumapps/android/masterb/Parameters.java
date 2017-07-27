@@ -15,6 +15,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
@@ -31,7 +32,11 @@ public class Parameters extends AppCompatActivity {
 
    @Override
     public void onBackPressed() {
-       startActivity(new Intent(this,MasterActivity.class));
+
+           super.onBackPressed();
+            startActivity(new Intent(this,MasterActivity.class));
+           this.finish();
+
     }
 
 
@@ -72,12 +77,49 @@ public class Parameters extends AppCompatActivity {
             @Override
             public void onClick(View v){
 
+
+                InputStream inputStream_spinner = getResources().openRawResource(
+                        getResources().getIdentifier("spinner_fr",
+                                "raw", getPackageName()));
+                dropdown = (Spinner)findViewById(R.id.spinner2);
+                adapter = new ArrayAdapter<String>(getBaseContext(),
+                        android.R.layout.simple_list_item_1,list);
+
                 resetFile(spinnerFill);
+                adapter.clear();
+                try{
+                    InputStreamReader fis = new InputStreamReader(inputStream_spinner);
+                    BufferedReader br = new BufferedReader(fis);
+                    String line;
+                    line = br.readLine();
+
+                    while (line != null)
+                    {
+                        String lineTab[] = line.split(",");
+                        list.add(lineTab[0]);
+                        list.add(lineTab[1]);
+                        list.add(lineTab[2]);
+                        line = br.readLine();
+                    }
+                    br.close();
+                    dropdown.setAdapter(adapter);
+                }
+                catch (java.io.IOException e){
+                    e.getMessage();
+                }
 
             }
 
             private void resetFile(String spinnerFill) {
-                
+
+                try{
+                    FileOutputStream fis = openFileOutput(spinnerFill, MODE_PRIVATE);
+                    PrintWriter pw = new PrintWriter(new OutputStreamWriter(fis));
+                    pw.close();
+                }
+                catch(java.io.IOException e){
+                    e.getMessage();
+                }
 
             }
         };
