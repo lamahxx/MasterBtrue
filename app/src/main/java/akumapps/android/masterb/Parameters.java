@@ -26,16 +26,18 @@ public class Parameters extends AppCompatActivity {
 
     private Spinner dropdown;
     private ArrayAdapter<String> adapter;
-    private String spinnerFill;
+    private String spinnerFill; //fichier
+    private String fileBudgetMax; //fichier
     private ArrayList<String> list = new ArrayList();
 
 
-   @Override
+    @Override
     public void onBackPressed() {
+        super.onBackPressed();
 
-           super.onBackPressed();
-            startActivity(new Intent(this,MasterActivity.class));
-           this.finish();
+
+        startActivity(new Intent(this, MasterActivity.class));
+        this.finish();
 
     }
 
@@ -46,14 +48,7 @@ public class Parameters extends AppCompatActivity {
         setContentView(R.layout.activity_parameters);
 
 
-        spinnerFill = getString(R.string.fileNameSpinner);
-
         initScreenParam();
-
-        //dropdown = (Spinner)findViewById(R.id.spinner2);
-        //adapter = new ArrayAdapter<String>(getBaseContext(),
-                //android.R.layout.simple_list_item_1,list);
-
 
         final Button addSpinner = (Button) findViewById(R.id.addSpinner);
         addSpinner.setOnClickListener(OnClickAdd());
@@ -61,8 +56,11 @@ public class Parameters extends AppCompatActivity {
         final Button resetSpinner = (Button) findViewById(R.id.resetSpinner);
         resetSpinner.setOnClickListener(onClickReset_spinner());
 
-
+        final Button submit = (Button) findViewById(R.id.buttonValider);
+        submit.setOnClickListener(onClickSubmit());
     }
+
+
 
 
 
@@ -71,6 +69,49 @@ public class Parameters extends AppCompatActivity {
     /*                                                                      */
     /*                                                                      */
 
+    /*                           buttonSubmit                               */
+    public View.OnClickListener onClickSubmit() {
+        View.OnClickListener rs = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String budgetMaxString;
+                //on code ici
+                EditText editBudgetMax = (EditText) findViewById(R.id.max_threshold_value);
+                budgetMaxString = editBudgetMax.getText().toString().trim();
+
+                if (budgetMaxString.isEmpty()) {
+
+                    Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.emptyEntry),
+                            Toast.LENGTH_LONG);
+                    toast.show();
+
+                }
+                else{
+
+                    try {
+                        FileOutputStream fos = openFileOutput(fileBudgetMax, MODE_PRIVATE);
+                        PrintWriter pw = new PrintWriter(fos);
+                        pw.print(budgetMaxString);
+                        pw.close();
+
+                    } catch (java.io.IOException e) {
+                        e.getMessage();
+                    }
+
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            getString(R.string.maximumBudget_toast) + " " + budgetMaxString, Toast.LENGTH_LONG);
+                    toast.show();
+
+                }
+            }
+        };
+        return rs;
+    }
+
+
+
+    /*                          buttonReset                                 */
 
     public View.OnClickListener onClickReset_spinner() {
         View.OnClickListener rs = new View.OnClickListener(){
@@ -107,6 +148,9 @@ public class Parameters extends AppCompatActivity {
                 catch (java.io.IOException e){
                     e.getMessage();
                 }
+                Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.reset_ok),
+                        Toast.LENGTH_LONG);
+                toast.show();
 
             }
 
@@ -128,9 +172,7 @@ public class Parameters extends AppCompatActivity {
 
 
 
-
-
-
+    /*                                  buttonAdd                       */
 
     public View.OnClickListener OnClickAdd() {
         View.OnClickListener on = new View.OnClickListener() {
@@ -191,8 +233,25 @@ public class Parameters extends AppCompatActivity {
         dropdown = (Spinner)findViewById(R.id.spinner2);
         adapter = new ArrayAdapter<String>(getBaseContext(),
                 android.R.layout.simple_list_item_1,list);
+        // Fichier d'entrées utilisateur pour le spinner
+        spinnerFill = getString(R.string.fileNameSpinner);
+        fileBudgetMax = getString(R.string.fileNameBudget_max);
+        EditText editTextBudget = (EditText) findViewById(R.id.max_threshold_value);
 
 
+        //Affichage du budget maximum
+        try{
+            FileInputStream fis = openFileInput(fileBudgetMax);
+            BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+            String line;
+            line = br.readLine();
+            if(line!=null){ editTextBudget.setText(line);}
+            else{ editTextBudget.setText("0");}
+            br.close();
+        }
+        catch(java.io.IOException e){
+            e.getMessage();
+        }
 
 
 

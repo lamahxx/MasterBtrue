@@ -26,6 +26,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -62,12 +63,15 @@ public class MasterActivity extends AppCompatActivity {
     ArrayList<String> finalItems = new ArrayList<>();
     TextView depense;
 
+    Float budgetMax = 0f;
+    Float montantTotCourant = 0f;
 
 
 
     String spinnerFill; //fichier
     String fileNameList;
     String fileNameMontant_Courant;
+    String fileNamebudgetMax;
 
 
 
@@ -157,7 +161,7 @@ public class MasterActivity extends AppCompatActivity {
                 montantTotalI+=montantI;
 
                 setText(montantTotal,montantTotalI.toString(), MODE_PRIVATE);
-
+                setProgress(budgetMax, montantTotalI);
                 if(montantIString.isEmpty() || montantIString.equals("0"))
                 {
 
@@ -207,6 +211,9 @@ public class MasterActivity extends AppCompatActivity {
                 //On Affiche rien dans la LISTEVIEW
                 adapter.clear();
 
+                //ProgressBar reInit
+                setProgress(budgetMax, 0f);
+
             }
         };
         return on;
@@ -247,6 +254,7 @@ public class MasterActivity extends AppCompatActivity {
         //Init des variables
 
 
+
         mListView = (ListView) findViewById(R.id.list);
         depense = (TextView) findViewById(R.id.montantTotal);
         listDepense = new ArrayList<>();
@@ -254,9 +262,29 @@ public class MasterActivity extends AppCompatActivity {
                 android.R.layout.simple_list_item_1,listDepense);
         dropdown = (Spinner)findViewById(R.id.spinner1);
         String items[] = new String[]{};
-
         fileNameList = getString(R.string.fileNameList);
         fileNameMontant_Courant = getString(R.string.fileNameMontant_Courant);
+
+
+
+        //Chargement du budgetMax à partir du fichier
+        fileNamebudgetMax= getString(R.string.fileNameBudget_max);
+        try{
+            FileInputStream fis = openFileInput(fileNamebudgetMax);
+            BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+            String line;
+            line = br.readLine();
+            if (line!=null){
+                budgetMax = Float.parseFloat(line);
+            }
+            else budgetMax = 0f;
+        }
+        catch(java.io.IOException e){
+            e.getMessage();
+        }
+
+
+
 
         //Appel dans  resources du fichier spinner_fr
         InputStream inputStream_spinner = getResources().openRawResource(
@@ -285,7 +313,6 @@ public class MasterActivity extends AppCompatActivity {
         catch (java.io.IOException e){
             e.getMessage();
         }
-
 
 
 
@@ -348,13 +375,14 @@ public class MasterActivity extends AppCompatActivity {
 
             }
             depense.setText(line);
+            montantTotCourant = Float.parseFloat(line);
             br.close();
         }
         catch(java.io.IOException e)
         {
             e.getMessage();
         }
-
+        setProgress(budgetMax, montantTotCourant);
 
 
 
@@ -386,6 +414,7 @@ public class MasterActivity extends AppCompatActivity {
             e.getMessage();
         }
     }
+
 
 
 
@@ -454,7 +483,18 @@ public class MasterActivity extends AppCompatActivity {
 
     }
 
+    private void setProgress(Float budget, Float montant){
 
+        ProgressBar progress = (ProgressBar) findViewById(R.id.progressbar);
+        if(budget == 0){
+            progress.setProgress(0);
+        }
+        else {
+            Integer progValue = Math.round((montant * 100) / budget);
+            progress.setProgress(progValue);
+        }
+
+    }
 
 
 

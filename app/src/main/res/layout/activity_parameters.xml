@@ -27,18 +27,46 @@
         <Button
 
             android:id="@+id/addSpinner"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
+
             android:text="@string/addCat" />
 
         <Button
 
             android:id="@+id/resetSpinner"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
+
             android:text="@string/reset"/>
     </TableRow>
 
+
+    <TextView
+        android:id="@+id/threshold_title"
+        android:text="@string/threshold_title"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"/>
+
+    <TableRow>
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/max_threshold"
+            android:text="@string/max_threshold_text"
+            android:textSize="18sp" />
+        <EditText
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/max_threshold_value"
+            android:textSize="18sp"
+            android:inputType="numberDecimal"/>
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/buttonValider"
+            android:drawableLeft="@drawable/ic_action_submit" />
+
+    </TableRow>
 
 
 </TableLayout>
