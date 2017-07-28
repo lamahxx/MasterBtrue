@@ -47,7 +47,6 @@
         android:paddingTop="10dp"/>
 
     <TableRow>
-
         <TextView
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
@@ -65,7 +64,63 @@
             android:layout_width="wrap_content"
             android:id="@+id/buttonValider"
             android:drawableLeft="@drawable/ic_action_submit" />
+    </TableRow>
 
+    <TableRow>
+        <Spinner
+            android:id="@+id/spinnerThreshold_1"
+            android:spinnerMode="dropdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:id="@+id/editThreshold_1"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textSize="18sp"
+            android:inputType="numberDecimal"/>
+
+        <Button
+            android:id="@+id/buttonThreshold_1"
+            android:drawableLeft="@drawable/ic_action_submit"/>
+    </TableRow>
+
+    <TableRow>
+        <Spinner
+            android:id="@+id/spinnerThreshold_2"
+            android:spinnerMode="dropdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:id="@+id/editThreshold_2"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textSize="18sp"
+            android:inputType="numberDecimal"/>
+
+        <Button
+            android:id="@+id/buttonThreshold_2"
+            android:drawableLeft="@drawable/ic_action_submit"/>
+    </TableRow>
+
+    <TableRow>
+        <Spinner
+            android:id="@+id/spinnerThreshold_3"
+            android:spinnerMode="dropdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:id="@+id/editThreshold_3"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textSize="18sp"
+            android:inputType="numberDecimal"/>
+
+        <Button
+            android:id="@+id/buttonThreshold_3"
+            android:drawableLeft="@drawable/ic_action_submit"/>
     </TableRow>
 
 

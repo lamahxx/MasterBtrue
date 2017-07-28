@@ -25,6 +25,9 @@ public class Parameters extends AppCompatActivity {
 
 
     private Spinner dropdown;
+    private Spinner dropdownThresh_1;
+    private Spinner dropdownThresh_2;
+    private Spinner dropdownThresh_3;
     private ArrayAdapter<String> adapter;
     private String spinnerFill; //fichier
     private String fileBudgetMax; //fichier
@@ -123,6 +126,9 @@ public class Parameters extends AppCompatActivity {
                         getResources().getIdentifier("spinner_fr",
                                 "raw", getPackageName()));
                 dropdown = (Spinner)findViewById(R.id.spinner2);
+                dropdownThresh_1 = (Spinner) findViewById(R.id.spinnerThreshold_1);
+                dropdownThresh_2 = (Spinner) findViewById(R.id.spinnerThreshold_2);
+                dropdownThresh_3 = (Spinner) findViewById(R.id.spinnerThreshold_3);
                 adapter = new ArrayAdapter<String>(getBaseContext(),
                         android.R.layout.simple_list_item_1,list);
 
@@ -144,6 +150,9 @@ public class Parameters extends AppCompatActivity {
                     }
                     br.close();
                     dropdown.setAdapter(adapter);
+                    dropdownThresh_1.setAdapter(adapter);
+                    dropdownThresh_3.setAdapter(adapter);
+                    dropdownThresh_2.setAdapter(adapter);
                 }
                 catch (java.io.IOException e){
                     e.getMessage();
@@ -237,7 +246,9 @@ public class Parameters extends AppCompatActivity {
         spinnerFill = getString(R.string.fileNameSpinner);
         fileBudgetMax = getString(R.string.fileNameBudget_max);
         EditText editTextBudget = (EditText) findViewById(R.id.max_threshold_value);
-
+        dropdownThresh_1 = (Spinner) findViewById(R.id.spinnerThreshold_1);
+        dropdownThresh_2 = (Spinner) findViewById(R.id.spinnerThreshold_2);
+        dropdownThresh_3 = (Spinner) findViewById(R.id.spinnerThreshold_3);
 
         //Affichage du budget maximum
         try{
@@ -272,6 +283,9 @@ public class Parameters extends AppCompatActivity {
             }
             br.close();
             dropdown.setAdapter(adapter);
+            dropdownThresh_1.setAdapter(adapter);
+            dropdownThresh_3.setAdapter(adapter);
+            dropdownThresh_2.setAdapter(adapter);
         }
         catch (java.io.IOException e){
             e.getMessage();
@@ -290,6 +304,9 @@ public class Parameters extends AppCompatActivity {
             }
             br2.close();
             dropdown.setAdapter(adapter);
+            dropdownThresh_1.setAdapter(adapter);
+            dropdownThresh_3.setAdapter(adapter);
+            dropdownThresh_2.setAdapter(adapter);
         }
         catch(java.io.IOException e)
         {
