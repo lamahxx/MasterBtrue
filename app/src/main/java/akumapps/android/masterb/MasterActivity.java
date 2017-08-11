@@ -31,6 +31,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -62,17 +64,27 @@ public class MasterActivity extends AppCompatActivity {
     private Spinner dropdown;
     ArrayList<String> finalItems = new ArrayList<>();
     TextView depense;
+    TextView thresh1txt;
+    TextView thresh2txt;
+    TextView thresh3txt;
 
     Float budgetMax = 0f;
     Float montantTotCourant = 0f;
 
+    Float thresholdAmount1 = 0f;
+    Float thresholdAmount2 = 0f;
+    Float thresholdAmount3 = 0f;
+
+    private String thresh1;
+    private String thresh2;
+    private String thresh3;
 
 
-    String spinnerFill; //fichier
+    //fichiers
+    String spinnerFill;
     String fileNameList;
     String fileNameMontant_Courant;
     String fileNamebudgetMax;
-
 
 
     //*******************MAIN********************//
@@ -106,6 +118,9 @@ public class MasterActivity extends AppCompatActivity {
 
         final Button reset = (Button) findViewById(R.id.reset);
         reset.setOnClickListener(OnClickReset());
+
+        final Button removeItem = (Button) findViewById(R.id.deleteItem);
+        removeItem.setOnClickListener(onClick_remove_item());
 
 
 
@@ -178,6 +193,9 @@ public class MasterActivity extends AppCompatActivity {
                         addToList(montantI, dropdown.getSelectedItem().toString(), fdate.date);
                         setList(listDepense, MODE_PRIVATE);
                         montant.setText(null);
+                        add_ThresholdAmount_button(dropdown.getSelectedItem().toString(), montantI);
+                        check_Threshold(dropdown.getSelectedItem().toString());
+                        threshold_text_display();
                     }
                 }
 
@@ -211,13 +229,63 @@ public class MasterActivity extends AppCompatActivity {
                 //On Affiche rien dans la LISTEVIEW
                 adapter.clear();
 
+
                 //ProgressBar reInit
                 setProgress(budgetMax, 0f);
+
+                //Amounts Reinit
+                thresholdAmount1 = 0f;
+                thresholdAmount2 = 0f;
+                thresholdAmount3 = 0f;
+                threshold_text_display();
 
             }
         };
         return on;
 
+    }
+
+    /*                  buttonRemoveItem                    */
+    public View.OnClickListener onClick_remove_item(){
+        View.OnClickListener v = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(listDepense.size() >= 1) {
+                    Depense d = listDepense.get(listDepense.size() -1);
+                    Float montant;
+                    String label;
+                    label = d.getLibelleDepense().trim();
+                    montant = d.getMontantDepense();
+                    if(label.equals(thresh1) || label.equals(thresh2) || label.equals(thresh3)){
+                        if(label.equals(thresh1)){
+                            thresholdAmount1 = thresholdAmount1 - montant;
+                            String number = thresholdAmount1.toString();
+                            thresh1txt.setText(thresh1+" --- "+number);
+                        }
+                        if(label.equals(thresh2)){
+                            thresholdAmount2 = thresholdAmount2 - montant;
+                            String number = thresholdAmount2.toString();
+                            thresh2txt.setText(thresh2+" --- "+number);
+                        }
+                        if(label.equals(thresh3)){
+                            thresholdAmount3 = thresholdAmount3 - montant;
+                            String number = thresholdAmount3.toString();
+                            thresh3txt.setText(thresh3+" --- "+number);
+                        }
+                    }
+                    Float montantCourant =  Float.parseFloat(depense.getText().toString());
+                    montantCourant = montantCourant - montant;
+                    setText(depense,montantCourant.toString(),MODE_PRIVATE);
+                    listDepense.remove(listDepense.size() - 1);
+                    setList(listDepense, MODE_PRIVATE);
+                    mListView.setAdapter(adapter);
+                }
+                else{
+                    Toast.makeText(getApplicationContext(),"There is nothing to be removed",Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+        return v;
     }
 
 
@@ -254,7 +322,9 @@ public class MasterActivity extends AppCompatActivity {
         //Init des variables
 
 
-
+        thresh1txt = (TextView) findViewById(R.id.thresh1);
+        thresh2txt = (TextView) findViewById(R.id.thresh2);
+        thresh3txt = (TextView) findViewById(R.id.thresh3);
         mListView = (ListView) findViewById(R.id.list);
         depense = (TextView) findViewById(R.id.montantTotal);
         listDepense = new ArrayList<>();
@@ -265,6 +335,8 @@ public class MasterActivity extends AppCompatActivity {
         fileNameList = getString(R.string.fileNameList);
         fileNameMontant_Courant = getString(R.string.fileNameMontant_Courant);
 
+        //Chargement des Thresholds
+        get_Threshold_Names();
 
 
         //Chargement du budgetMax à partir du fichier
@@ -317,7 +389,8 @@ public class MasterActivity extends AppCompatActivity {
 
 
 
-        //Chargement tableau finalItems à partir du tableau obtenu par la lecture du fichier resource spinner_fr
+        //Chargement tableau finalItems à partir du tableau obtenu par la lecture du fichier
+        // resource spinner_fr
 
         int p = 0;
         while(p<items.length){
@@ -413,6 +486,12 @@ public class MasterActivity extends AppCompatActivity {
         {
             e.getMessage();
         }
+
+        //Chargement montant Threshold
+        set_Threshold_Amounts();
+
+        //Affichage des Threshold en Cours
+        threshold_text_display();
     }
 
 
@@ -486,10 +565,12 @@ public class MasterActivity extends AppCompatActivity {
     private void setProgress(Float budget, Float montant){
 
         ProgressBar progress = (ProgressBar) findViewById(R.id.progressbar);
-        if(budget == 0){
-            progress.setProgress(0);
+        if(budget == 0 || montant == 0){
+
+            progress.setVisibility(View.INVISIBLE);
         }
         else {
+            progress.setVisibility(View.VISIBLE);
             Integer progValue = Math.round((montant * 100) / budget);
             progress.setProgress(progValue);
         }
@@ -497,12 +578,158 @@ public class MasterActivity extends AppCompatActivity {
     }
 
 
+    //BON CODE DE MERDE MAIS CA MARCHE
+
+    private void set_Threshold_Amounts(){
+
+        int i = 0;
+        String label;
+        String tmp [];
+        while(i <listDepense.size()){
+            tmp = listDepense.get(i).toString().split(" ");
+            label = tmp[1];
+            if(label.equals(thresh1) || label.equals(thresh2) || label.equals(thresh3)) {
+                if (label.equals(thresh1)) {
+                    thresholdAmount1 = thresholdAmount1 + Float.parseFloat(tmp[0]);
+
+                }
+                if (label.equals(thresh2)) {
+                    thresholdAmount2 = thresholdAmount2 + Float.parseFloat(tmp[0]);
+
+                }
+                if (label.equals(thresh3)) {
+                    thresholdAmount3 = thresholdAmount3 + Float.parseFloat(tmp[0]);
+
+                }
+                i++;
+            }
+            else{
+                i++;
+            }
+        }
+
+    }
+
+    private void get_Threshold_Names(){
+
+        String fileNameThresh = getString(R.string.fileNameThreshold);
+
+        try{
+            FileInputStream fis = openFileInput(fileNameThresh);
+            BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+
+            ArrayList<String> tmp = new ArrayList<>();
+            String line;
+            line = br.readLine();
+            while (line != null){
+                tmp.add(line);
+                line =br.readLine();
+            }
+            br.close();
+
+            int i = tmp.size();
+
+            if(i == 0){
+                thresh1 = null;
+                thresh2 = null;
+                thresh3 = null;
+            }
+            if (i == 1){
+                thresh1 = tmp.get(0);
+                thresh2 = null;
+                thresh3 = null;
+            }
+            if (i == 2){
+                thresh1 = tmp.get(0);
+                thresh2 = tmp.get(1);
+                thresh3 = null;
+            }
+            if( i == 3){
+                thresh1 = tmp.get(0);
+                thresh2 = tmp.get(1);
+                thresh3 = tmp.get(2);
+            }
+
+        }
+        catch(java.io.IOException e){
+            e.getMessage();
+        }
+
+    }
 
 
 
+    private void check_Threshold(String threshLabel){
+        Float tmp;
+
+        if (budgetMax != 0) {
+
+            if (threshLabel.equals(thresh1)) {
+                tmp = (thresholdAmount1 * 100) / budgetMax;
+
+                if (tmp > 30 && tmp <=49) {
+                    Toast.makeText(getApplicationContext(), "BABYLONE", Toast.LENGTH_SHORT).show();
+                }
+                if(tmp > 50 && tmp <= 99){
+                    Toast.makeText(getApplicationContext(), "BABYLONE2", Toast.LENGTH_SHORT).show();
+                }
+                if(tmp >= 100){
+                    Toast.makeText(getApplicationContext(),"BABYLONNNNE",Toast.LENGTH_SHORT).show();
+                }
+            }
+            if (threshLabel.equals(thresh2)) {
+                tmp = (thresholdAmount2 * 100) / budgetMax;
+                if (tmp >= 30 && tmp <= 49) {
+                    Toast.makeText(getApplicationContext(), "NOO", Toast.LENGTH_SHORT).show();
+                }
+                if(tmp >= 50 && tmp <= 99){
+                    Toast.makeText(getApplicationContext(), "NOO2", Toast.LENGTH_SHORT).show();
+                }
+                if(tmp >= 100){
+                    Toast.makeText(getApplicationContext(),"NOO3",Toast.LENGTH_SHORT).show();
+                }
+            }
+            if (threshLabel.equals(thresh3)) {
+                tmp = (thresholdAmount3 * 100) / budgetMax;
+                if (tmp >= 30 && tmp <=49) {
+                    Toast.makeText(getApplicationContext(), "YES", Toast.LENGTH_SHORT).show();
+                }
+                if(tmp >= 50 && tmp <=99){
+                    Toast.makeText(getApplicationContext(), "YES2", Toast.LENGTH_SHORT).show();
+                }
+                if(tmp >= 100){
+                    Toast.makeText(getApplicationContext(),"YES3",Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
 
 
+    private void add_ThresholdAmount_button(String label, Float montantI){
+        if(label.equals(thresh1)){
+            thresholdAmount1 = thresholdAmount1 + montantI;
+        }
+        if(label.equals(thresh2)){
+            thresholdAmount2 = thresholdAmount2 + montantI;
+        }
+        if(label.equals(thresh3)){
+            thresholdAmount3 = thresholdAmount3 + montantI;
+        }
+    }
 
+    private void threshold_text_display(){
+
+        if(thresh1!=null){
+            thresh1txt.setText(thresh1+" --- "+thresholdAmount1);
+        }
+        if(thresh2!=null){
+            thresh2txt.setText(thresh2+" --- "+thresholdAmount2);
+        }
+        if(thresh3!=null){
+            thresh3txt.setText(thresh3+" --- "+thresholdAmount3);
+        }
+
+    }
 
 
 

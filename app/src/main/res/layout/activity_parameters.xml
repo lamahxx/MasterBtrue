@@ -25,16 +25,16 @@
         android:id="@+id/tableRow4">
 
         <Button
-
             android:id="@+id/addSpinner"
-
             android:text="@string/addCat" />
 
         <Button
-
             android:id="@+id/resetSpinner"
-
             android:text="@string/reset"/>
+
+        <Button
+            android:id="@+id/deleteItem"
+            android:text="remove" />
     </TableRow>
 
 
@@ -73,55 +73,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-        <EditText
-            android:id="@+id/editThreshold_1"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:textSize="18sp"
-            android:inputType="numberDecimal"/>
+
 
         <Button
             android:id="@+id/buttonThreshold_1"
             android:drawableLeft="@drawable/ic_action_submit"/>
-    </TableRow>
-
-    <TableRow>
-        <Spinner
-            android:id="@+id/spinnerThreshold_2"
-            android:spinnerMode="dropdown"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <EditText
-            android:id="@+id/editThreshold_2"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:textSize="18sp"
-            android:inputType="numberDecimal"/>
 
         <Button
-            android:id="@+id/buttonThreshold_2"
-            android:drawableLeft="@drawable/ic_action_submit"/>
+            android:id="@+id/buttonDeleteThresh"
+            android:drawableRight="@drawable/ic_action_delete2" />
     </TableRow>
 
-    <TableRow>
-        <Spinner
-            android:id="@+id/spinnerThreshold_3"
-            android:spinnerMode="dropdown"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+    <TextView   android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/thresh_labels"
+        android:text="@string/thresh_labels"
+        android:textSize="18sp"
+        android:gravity="center"/>
 
-        <EditText
-            android:id="@+id/editThreshold_3"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:textSize="18sp"
-            android:inputType="numberDecimal"/>
-
-        <Button
-            android:id="@+id/buttonThreshold_3"
-            android:drawableLeft="@drawable/ic_action_submit"/>
-    </TableRow>
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listThresholds"
+        android:divider="#af0089"
+        android:background="#af0089"/>
 
 
 </TableLayout>

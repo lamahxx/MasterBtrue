@@ -9,6 +9,7 @@
     <string name="fileNameList">listDepense</string>
     <string name="fileNameMontant_Courant">montantCourant</string>
     <string name="fileNameBudget_max">budget</string>
+    <string name="fileNameThreshold">Thresholds</string>
 
 
 
@@ -38,6 +39,7 @@
     **************** Text ****************************
     <string name="threshold_title">Thresholds</string>
     <string name="max_threshold_text">Budget maximum du mois:</string>
+    <string name="thresh_labels">Current Thresholds:</string>
 
 
 </resources>
