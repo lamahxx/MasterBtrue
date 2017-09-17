@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="akumapps.android.masterb.MasterActivity">
+
+
+    <item
+        android:id="@+id/parametres"
+        android:orderInCategory="100"
+        android:title="@string/parametres"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/bilan"
+        android:orderInCategory="100"
+        android:title="@string/bilan"
+        app:showAsAction="always"/>
+
+</menu>
