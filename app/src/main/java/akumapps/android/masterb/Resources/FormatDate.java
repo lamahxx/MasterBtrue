@@ -8,6 +8,10 @@ import java.text.ParseException;
 public class FormatDate {
 
     public String date;
+    public String month;
+    public String year;
+    public String day;
+
 
     public FormatDate()
     {
@@ -16,10 +20,14 @@ public class FormatDate {
 
         date=sdf.format(new Date());
 
+        String tabDate[]= date.split(";");
 
-        // *** note that it's "yyyy-MM-dd hh:mm:ss" not "yyyy-mm-dd hh:mm:ss"
-        //SimpleDateFormat dt = new SimpleDateFormat("E yyyy.MM.dd 'at' hh:mm:ss a zzz");
-        // date = dt.parse(d);
+        day=tabDate[0];
+        month=tabDate[1];
+        year=tabDate[2];
+
 
     }
+
+
 }

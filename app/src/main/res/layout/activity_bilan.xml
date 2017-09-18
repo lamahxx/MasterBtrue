@@ -15,6 +15,15 @@ android:orientation="horizontal">
     android:spinnerMode="dropdown"/>
 <LinearLayout android:orientation="vertical">
 
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:id="@+id/tVmois"
+        android:background="@android:color/holo_red_light" />
+
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,9 +33,17 @@ android:orientation="horizontal">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/total"
+        android:id="@+id/totalBilan"
         android:text="BABYLONE APPROCHE"
         android:textColor="@android:color/holo_red_light"/>
+    <LinearLayout android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </LinearLayout>
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listBilan" />
 
 </LinearLayout>
 

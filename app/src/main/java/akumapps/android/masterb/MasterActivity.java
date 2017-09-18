@@ -281,7 +281,7 @@ public class MasterActivity extends AppCompatActivity {
                     mListView.setAdapter(adapter);
                 }
                 else{
-                    Toast.makeText(getApplicationContext(),"There is nothing to be removed",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"There is nothing to remove",Toast.LENGTH_SHORT).show();
                 }
             }
         };
@@ -320,17 +320,17 @@ public class MasterActivity extends AppCompatActivity {
     public void initScreen() {
 
         //Init des variables
-
-
         thresh1txt = (TextView) findViewById(R.id.thresh1);
         thresh2txt = (TextView) findViewById(R.id.thresh2);
         thresh3txt = (TextView) findViewById(R.id.thresh3);
         mListView = (ListView) findViewById(R.id.list);
         depense = (TextView) findViewById(R.id.montantTotal);
         listDepense = new ArrayList<>();
+
         adapter = new ArrayAdapter<>(getBaseContext(),
                 android.R.layout.simple_list_item_1,listDepense);
         dropdown = (Spinner)findViewById(R.id.spinner1);
+
         String items[] = new String[]{};
         fileNameList = getString(R.string.fileNameList);
         fileNameMontant_Courant = getString(R.string.fileNameMontant_Courant);
@@ -476,7 +476,12 @@ public class MasterActivity extends AppCompatActivity {
                         Integer.parseInt(tabList[2].split("/")[0]),
                         Integer.parseInt(tabList[2].split("/")[1]),
                         Integer.parseInt(tabList[2].split("/")[2]));
-                listDepense.add(d);
+
+                FormatDate currentDate = new FormatDate();
+
+               if(Integer.parseInt(currentDate.month)==d.getMonth()&&Integer.parseInt(currentDate.year)==d.getYear() ){
+                    listDepense.add(d);
+                }
                 lineList=brList.readLine();
             }
             brList.close();

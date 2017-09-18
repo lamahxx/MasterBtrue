@@ -6,5 +6,7 @@
     <item name="reset" type="id" />
     <item name="libelle" type="id" />
     <item name="list" type="id" />
+    <item name="listBilan" type="id" />
     <item name="bilan" type ="id"/>
+    <item name="totalBilan" type ="id"/>
 </resources>
