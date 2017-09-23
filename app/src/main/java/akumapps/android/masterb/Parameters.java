@@ -478,12 +478,15 @@ public class Parameters extends AppCompatActivity {
 
     private void delete_selected_label(String selectedLabel){
         int i = 0;
-        while (i < list.size()){
-            if(selectedLabel.equals(list.get(i))){
-                list.remove(i);
+        if( list.size() > 3 ){
+            while (i < list.size()){
+                if(selectedLabel.equals(list.get(i))){
+                    list.remove(i);
+                }
+                else{i++;}
             }
-            else{i++;}
         }
+        else{ Toast.makeText(getApplicationContext(), "Can't remove default items", Toast.LENGTH_SHORT).show();}
     }
 
     private void setFile(){
@@ -491,7 +494,7 @@ public class Parameters extends AppCompatActivity {
         try{
             FileOutputStream fos = openFileOutput(spinnerFill, MODE_PRIVATE);
             PrintWriter pw = new PrintWriter(fos);
-            int i = 0;
+            int i = 3;
             while (i <list.size()){
                 pw.print(list.get(i)+"\n");
                 i++;

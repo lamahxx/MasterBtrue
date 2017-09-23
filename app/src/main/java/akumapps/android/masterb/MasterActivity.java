@@ -16,11 +16,13 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -116,11 +118,8 @@ public class MasterActivity extends AppCompatActivity {
         final Button buttonAdd= (Button) findViewById(R.id.buttonAdd);
         buttonAdd.setOnClickListener(OnClickAdd());
 
-        final Button reset = (Button) findViewById(R.id.reset);
-        reset.setOnClickListener(OnClickReset());
 
-        final Button removeItem = (Button) findViewById(R.id.deleteItem);
-        removeItem.setOnClickListener(onClick_remove_item());
+
 
 
 
@@ -210,12 +209,8 @@ public class MasterActivity extends AppCompatActivity {
 
 /*                             BOUTON RESET                */
 
-    public View.OnClickListener OnClickReset()
+   public void OnClickReset()
     {
-       View.OnClickListener on = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
                 //Ouverture et fermeture du fichier pour effacer le fichier : MONTANT TOTAL
                 resetFile(fileNameMontant_Courant, MODE_PRIVATE);
 
@@ -238,11 +233,6 @@ public class MasterActivity extends AppCompatActivity {
                 thresholdAmount2 = 0f;
                 thresholdAmount3 = 0f;
                 threshold_text_display();
-
-            }
-        };
-        return on;
-
     }
 
     /*                  buttonRemoveItem                    */
@@ -338,8 +328,15 @@ public class MasterActivity extends AppCompatActivity {
         //Chargement des Thresholds
         get_Threshold_Names();
 
+        //Context Menu de la ListView
 
-        //Chargement du budgetMax à partir du fichier
+
+        registerForContextMenu(mListView);
+
+
+
+
+    //Chargement du budgetMax à partir du fichier
         fileNamebudgetMax= getString(R.string.fileNameBudget_max);
         try{
             FileInputStream fis = openFileInput(fileNamebudgetMax);
@@ -673,7 +670,13 @@ public class MasterActivity extends AppCompatActivity {
                 tmp = (thresholdAmount1 * 100) / budgetMax;
 
                 if (tmp > 30 && tmp <=49) {
-                    Toast.makeText(getApplicationContext(), "BABYLONE", Toast.LENGTH_SHORT).show();
+                    LayoutInflater inflater = getLayoutInflater();
+                    View view = inflater.inflate(R.layout.cust_toast_layout,
+                            (ViewGroup) findViewById(R.id.relativeLayout1));
+
+                    Toast toast = new Toast(this);
+                    toast.setView(view);
+                    toast.show();
                 }
                 if(tmp > 50 && tmp <= 99){
                     Toast.makeText(getApplicationContext(), "BABYLONE2", Toast.LENGTH_SHORT).show();
@@ -741,6 +744,62 @@ public class MasterActivity extends AppCompatActivity {
 
 
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo)
+    {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.setHeaderTitle("Select The Action");
+        menu.add(0, v.getId(), 0, "Delete");//groupId, itemId, order, title
+
+    }
+
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item){
+        if(item.getTitle()=="Delete"){
+            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+            int listPosition = info.position;
+
+
+            if(listDepense.size() >= 1) {
+                Depense d = listDepense.get(listPosition);
+                Float montant;
+                String label;
+                label = d.getLibelleDepense().trim();
+                montant = d.getMontantDepense();
+                if (label.equals(thresh1) || label.equals(thresh2) || label.equals(thresh3)) {
+                    if (label.equals(thresh1)) {
+                        thresholdAmount1 = thresholdAmount1 - montant;
+                        String number = thresholdAmount1.toString();
+                        thresh1txt.setText(thresh1 + " --- " + number);
+                    }
+                    if (label.equals(thresh2)) {
+                        thresholdAmount2 = thresholdAmount2 - montant;
+                        String number = thresholdAmount2.toString();
+                        thresh2txt.setText(thresh2 + " --- " + number);
+                    }
+                    if (label.equals(thresh3)) {
+                        thresholdAmount3 = thresholdAmount3 - montant;
+                        String number = thresholdAmount3.toString();
+                        thresh3txt.setText(thresh3 + " --- " + number);
+                    }
+                }
+                Float montantCourant = Float.parseFloat(depense.getText().toString());
+                montantCourant = montantCourant - montant;
+                setText(depense, montantCourant.toString(), MODE_PRIVATE);
+                listDepense.remove(listPosition);
+                setList(listDepense, MODE_PRIVATE);
+                adapter.notifyDataSetChanged();
+            }
+        }
+
+        else{
+            return false;
+        }
+        return true;
+    }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -748,6 +807,7 @@ public class MasterActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_master, menu);
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -772,6 +832,11 @@ public class MasterActivity extends AppCompatActivity {
             startActivity(intentBilan);
             return true;
         }
+
+        if(id == R.id.reset){
+            OnClickReset();
+        }
+
 
         return super.onOptionsItemSelected(item);
     }

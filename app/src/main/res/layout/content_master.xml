@@ -23,24 +23,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/buttonAdd"
-        android:id="@+id/buttonAdd" />
+        android:id="@+id/buttonAdd"
+        android:drawableTop="@mipmap/ic_launcher_button_add"
+        android:background="@null" />
     <EditText
         android:id="@+id/montant"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="numberDecimal" />
 
-    <Button
-        android:id="@+id/deleteItem"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:text="Remove Item" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/reset"
-        android:text="@string/reset" />
 
 
     <Spinner
@@ -52,7 +44,7 @@
 
     <ListView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:id="@+id/list" />
 
     <ProgressBar
