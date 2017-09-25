@@ -33,6 +33,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.lzyzsd.circleprogress.DonutProgress;
+
 import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
@@ -566,16 +568,24 @@ public class MasterActivity extends AppCompatActivity {
 
     private void setProgress(Float budget, Float montant){
 
-        ProgressBar progress = (ProgressBar) findViewById(R.id.progressbar);
+        ProgressBar progress = (ProgressBar) findViewById(R.id.progressBar);
+        /*
         if(budget == 0 || montant == 0){
 
             progress.setVisibility(View.INVISIBLE);
         }
         else {
+        */
             progress.setVisibility(View.VISIBLE);
             Integer progValue = Math.round((montant * 100) / budget);
-            progress.setProgress(progValue);
-        }
+            if (progValue <= 100){
+                progress.setProgress(progValue);
+            }
+            else{
+                progress.setProgress(100);
+            }
+
+
 
     }
 
