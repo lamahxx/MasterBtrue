@@ -24,24 +24,34 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:progressDrawable="@drawable/circular_progress_bar"
-        android:background="@drawable/circle_shape"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:max="100"
-        android:progress="65"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="0"
-        android:paddingTop="70dp"
-        android:id="@+id/montantTotal"
-        android:textColor="@android:color/holo_orange_light"
-        android:textSize="50sp"
-        android:layout_centerHorizontal="true"/>
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:progressDrawable="@drawable/circular_progress_bar"
+            android:background="@drawable/circle_shape"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:max="100" />
+        
+        <ProgressBar
+            android:id="@+id/progressBar2"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:progressDrawable="@drawable/circular_progress_bar2"
+            android:background="@drawable/circle_shape2"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:max="100"
+            android:progress="80"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:paddingTop="70dp"
+            android:id="@+id/montantTotal"
+            android:textColor="@android:color/holo_orange_light"
+            android:textSize="50sp"
+            android:layout_centerHorizontal="true"/>
     </RelativeLayout>
 </TableRow>
 

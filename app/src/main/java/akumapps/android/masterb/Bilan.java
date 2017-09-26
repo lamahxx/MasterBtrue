@@ -166,9 +166,6 @@ public class Bilan extends AppCompatActivity {
             });
 
 
-
-
-
             textView_mois.setOnTouchListener(new OnSwipeTouchListener(this)
                                          {
                                              @Override
