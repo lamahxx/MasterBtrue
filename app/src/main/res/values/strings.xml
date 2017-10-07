@@ -3,7 +3,6 @@
     <string name="spinner1">Spinner</string>
 
 
-
     **************** Fichiers **************************
     <string name="fileNameSpinner">fileNameSpinner</string>
     <string name="fileNameList">listDepense</string>
@@ -12,13 +11,11 @@
     <string name="fileNameThreshold">Thresholds</string>
 
 
-
     **************** Toast Message ********************
     <string name="notEnough">T\es pas si riche, sinon faut faire tourner</string>
     <string name="emptyEntry">Champ(s) vide mon Negro</string>
     <string name="maximumBudget_toast">Votre budget maximum du mois est de </string>
     <string name="reset_ok">RESET GUCCI</string>
-
 
 
     **************** Boutons ************************
@@ -29,17 +26,18 @@
     <string name="buttonValider">Valider</string>
 
 
-
     **************** Menu ****************************
     <string name="parametres">Paramètres</string>
     <string name="action_settings">Settings</string>
-
 
 
     **************** Text ****************************
     <string name="threshold_title">Thresholds</string>
     <string name="max_threshold_text">Budget maximum du mois:</string>
     <string name="thresh_labels">Current Thresholds:</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

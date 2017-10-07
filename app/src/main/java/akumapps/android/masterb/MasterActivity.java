@@ -12,6 +12,9 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -64,13 +67,14 @@ public class MasterActivity extends AppCompatActivity {
 
     private ListView mListView;
     private ArrayAdapter<Depense> adapter ;
-    private ArrayList<Depense> listDepense ;
+    ArrayList<Depense> listDepense ;
     private Spinner dropdown;
     ArrayList<String> finalItems = new ArrayList<>();
     TextView depense;
     TextView thresh1txt;
     TextView thresh2txt;
     TextView thresh3txt;
+    View touchView;
 
     Float budgetMax = 0f;
     Float montantTotCourant = 0f;
@@ -82,6 +86,8 @@ public class MasterActivity extends AppCompatActivity {
     private String thresh1;
     private String thresh2;
     private String thresh3;
+
+    boolean fragment_View = false;
 
 
     //fichiers
@@ -117,8 +123,10 @@ public class MasterActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-        final Button buttonAdd= (Button) findViewById(R.id.buttonAdd);
-        buttonAdd.setOnClickListener(OnClickAdd());
+        //final Button buttonAdd= (Button) findViewById(R.id.buttonAdd);
+        //buttonAdd.setOnClickListener(OnClickAdd());
+
+      //  touchView.setOnClickListener(OnClickAdd());
 
 
 
@@ -127,85 +135,12 @@ public class MasterActivity extends AppCompatActivity {
 
 
     }
+
 
 
     //****************BOUTONS**************************//
     //************************************************//
     //***********************************************//
-
-
-    /*                      BOUTON ADD                  */
-
-    public View.OnClickListener OnClickAdd() {
-        View.OnClickListener x = new View.OnClickListener() {
-            @Override
-            public void onClick(View v){
-
-                EditText montant= (EditText) findViewById(R.id.montant);
-                TextView montantTotal = (TextView) findViewById(R.id.montantTotal);
-
-                Boolean test = false;
-
-                String montantIString=montant.getText().toString();
-
-                if(montantIString.isEmpty())
-                {
-                    montantIString="0";
-                }
-
-
-                Float montantI= Float.parseFloat(montantIString);
-                if( montantI > 9999999 | montantI< 0)
-                {
-                    montantI = 0f;
-                    Toast toast = Toast.makeText(getApplicationContext(),
-                            getString(R.string.notEnough), Toast.LENGTH_SHORT);
-                    toast.show();
-                    test = true;
-                }
-
-                String montantTotalString=montantTotal.getText().toString();
-
-                if(montantTotalString.isEmpty())
-                {
-                    montantTotalString="0";
-
-                }
-
-                Float montantTotalI= Float.parseFloat(montantTotalString);
-
-                montantTotalI+=montantI;
-
-                setText(montantTotal,montantTotalI.toString(), MODE_PRIVATE);
-                setProgress(budgetMax, montantTotalI);
-                if(montantIString.isEmpty() || montantIString.equals("0"))
-                {
-
-                    Toast toast = Toast.makeText(getApplicationContext(),
-                            getString(R.string.emptyEntry), Toast.LENGTH_SHORT);
-                    toast.show();
-                }
-                else {
-                    if (test) {
-                        montant.setText(null);
-                    }
-                    else{
-                        FormatDate fdate = new FormatDate();
-                        addToList(montantI, dropdown.getSelectedItem().toString(), fdate.date);
-                        setList(listDepense, MODE_PRIVATE);
-                        montant.setText(null);
-                        add_ThresholdAmount_button(dropdown.getSelectedItem().toString(), montantI);
-                        check_Threshold(dropdown.getSelectedItem().toString());
-                        threshold_text_display();
-                    }
-                }
-
-            }
-
-
-        };
-        return x;
-    }
 
 
 
@@ -291,7 +226,7 @@ public class MasterActivity extends AppCompatActivity {
                     //***********************************************//
 
 
-    private void addToList(Float montantI, String libelle,String date) {
+    public void addToList(Float montantI, String libelle,String date) {
 
             String tabDate[] = parseDate(date);
             Depense a = new Depense(montantI, libelle,Integer.parseInt(tabDate[0]),
@@ -318,10 +253,10 @@ public class MasterActivity extends AppCompatActivity {
         mListView = (ListView) findViewById(R.id.list);
         depense = (TextView) findViewById(R.id.montantTotal);
         listDepense = new ArrayList<>();
-
+        touchView =  findViewById(R.id.touchView);
         adapter = new ArrayAdapter<>(getBaseContext(),
                 android.R.layout.simple_list_item_1,listDepense);
-        dropdown = (Spinner)findViewById(R.id.spinner1);
+        //dropdown = (Spinner)findViewById(R.id.spinner1);
 
         String items[] = new String[]{};
         fileNameList = getString(R.string.fileNameList);
@@ -331,7 +266,6 @@ public class MasterActivity extends AppCompatActivity {
         get_Threshold_Names();
 
         //Context Menu de la ListView
-
 
         registerForContextMenu(mListView);
 
@@ -423,9 +357,9 @@ public class MasterActivity extends AppCompatActivity {
 
 
         //Chargement du Spinner
-        ArrayAdapter<String> adapterSpinner = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_dropdown_item, finalItems);
-        dropdown.setAdapter(adapterSpinner);
+       // ArrayAdapter<String> adapterSpinner = new ArrayAdapter<>(this,
+         //       android.R.layout.simple_spinner_dropdown_item, finalItems);
+        // dropdown.setAdapter(adapterSpinner);
 
 
 
@@ -503,7 +437,7 @@ public class MasterActivity extends AppCompatActivity {
 
 
 
-    private void setText(TextView montantTotal, String montantTotalI, int mode)  {
+    public void setText(TextView montantTotal, String montantTotalI, int mode)  {
 
         montantTotal.setText(montantTotalI);
 
@@ -525,7 +459,7 @@ public class MasterActivity extends AppCompatActivity {
     }
             //ENREGISTREMENT DE LA LISTE DANS LE FICHIER fileNameList
 
-    private void setList(ArrayList<Depense> listDepense, int mode){
+    public void setList(ArrayList<Depense> listDepense, int mode){
         try{
             FileOutputStream fosList = openFileOutput(fileNameList, mode);
             PrintWriter pww = new PrintWriter(new OutputStreamWriter(fosList));
@@ -566,7 +500,7 @@ public class MasterActivity extends AppCompatActivity {
 
     }
 
-    private void setProgress(Float budget, Float montant){
+    public void setProgress(Float budget, Float montant){
 
         ProgressBar progress = (ProgressBar) findViewById(R.id.progressBar);
         /*
@@ -671,7 +605,7 @@ public class MasterActivity extends AppCompatActivity {
 
 
 
-    private void check_Threshold(String threshLabel){
+    public void check_Threshold(String threshLabel){
         Float tmp;
 
         if (budgetMax != 0) {
@@ -723,7 +657,7 @@ public class MasterActivity extends AppCompatActivity {
     }
 
 
-    private void add_ThresholdAmount_button(String label, Float montantI){
+    public void add_ThresholdAmount_button(String label, Float montantI){
         if(label.equals(thresh1)){
             thresholdAmount1 = thresholdAmount1 + montantI;
         }
@@ -735,7 +669,7 @@ public class MasterActivity extends AppCompatActivity {
         }
     }
 
-    private void threshold_text_display(){
+    public void threshold_text_display(){
 
         if(thresh1!=null){
             thresh1txt.setText(thresh1+" --- "+thresholdAmount1);
@@ -811,6 +745,8 @@ public class MasterActivity extends AppCompatActivity {
 
 
 
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -852,4 +788,18 @@ public class MasterActivity extends AppCompatActivity {
     }
 
 
+    public void showFragment(View view) {
+
+
+        if (!fragment_View) {
+            FragmentManager ff = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = ff.beginTransaction();
+            ajout_depense f1 = new ajout_depense();
+            fragmentTransaction.add(R.id.fragment_container, f1);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+            fragment_View = true;
+        }
+
+    }
 }

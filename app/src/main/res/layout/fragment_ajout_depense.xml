@@ -1,0 +1,48 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="akumapps.android.masterb.ajout_depense"
+    android:background="@drawable/rounded_background"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:id="@id/fragment_container">
+
+    <!-- TODO: Update blank fragment layout -->
+<TableLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    >
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center">
+    <EditText
+        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:id="@+id/montantFragment"
+        android:inputType="numberDecimal"
+        />
+
+
+</LinearLayout>
+
+    <Spinner
+        android:id="@+id/fragmentSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/btn_dropdown"
+        android:spinnerMode="dropdown"
+        />
+</TableLayout>
+    <Button
+        android:layout_height="50dp"
+        android:layout_width="110dp"
+        android:id="@+id/submit"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:text="Confirmer"
+        />
+
+</RelativeLayout>

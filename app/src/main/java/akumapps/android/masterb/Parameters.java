@@ -34,7 +34,6 @@ public class Parameters extends AppCompatActivity {
     private String spinnerFill; //fichier
     private String fileBudgetMax; //fichier
     private String fileThreshold; //fichier
-    String fileNameThreshAmount; //fichier
     private ArrayList<String> list = new ArrayList();
     private ArrayAdapter<String> adapterThresh;
     private ArrayList<String> listThresh = new ArrayList();
@@ -50,7 +49,7 @@ public class Parameters extends AppCompatActivity {
         startActivity(new Intent(this, MasterActivity.class));
         this.finish();
 
-    }
+}
 
 
     @Override

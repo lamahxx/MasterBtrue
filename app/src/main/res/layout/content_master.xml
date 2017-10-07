@@ -1,88 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:paddingTop="16dp"
     android:paddingBottom="16dp"
-    tools:context=".MasterActivity"
-    android:orientation="horizontal">
+    tools:context=".MasterActivity">
 
 
 
+    <View
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:id="@+id/touchView"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:onClick="showFragment"
+        />
 
-
-
-
-
-<TableRow
-    android:gravity="center"
-    android:layout_marginTop="50dp">
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <ProgressBar
+    <ProgressBar
             android:id="@+id/progressBar"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="400dp"
+            android:layout_height="400dp"
             android:progressDrawable="@drawable/circular_progress_bar"
             android:background="@drawable/circle_shape"
             style="?android:attr/progressBarStyleHorizontal"
-            android:max="100" />
-        
-        <ProgressBar
+            android:max="100"
+            android:layout_centerInParent="true"
+
+            />
+
+
+    <ProgressBar
             android:id="@+id/progressBar2"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
             android:progressDrawable="@drawable/circular_progress_bar2"
             android:background="@drawable/circle_shape2"
             style="?android:attr/progressBarStyleHorizontal"
             android:max="100"
-            android:progress="80"/>
+            android:progress="80"
+          android:layout_centerInParent="true"
+           />
 
-        <TextView
+    <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0"
-            android:paddingTop="70dp"
             android:id="@+id/montantTotal"
             android:textColor="@android:color/holo_orange_light"
             android:textSize="50sp"
-            android:layout_centerHorizontal="true"/>
-    </RelativeLayout>
-</TableRow>
+        android:layout_centerInParent="true"
+
+        />
 
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/buttonAdd"
-        android:id="@+id/buttonAdd"
-        android:drawableTop="@mipmap/ic_launcher_button_add"
-        android:background="@null" />
-    <EditText
-        android:id="@+id/montant"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="numberDecimal" />
-
-
-
-
-    <Spinner
-        android:id="@+id/spinner1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@android:drawable/btn_dropdown"
-        android:spinnerMode="dropdown" />
 
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="200dp"
-        android:id="@+id/list" />
+        android:id="@+id/list"
+        android:layout_below="@id/progressBar2"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        />
 
 
     <TextView
@@ -100,9 +82,12 @@
         android:layout_height="wrap_content"
         android:layout_width="wrap_content" />
 
+<LinearLayout
+    android:layout_height="200dp"
+    android:layout_width="match_parent"
+    android:id="@+id/fragment_container"
+android:orientation="horizontal"
+    android:layout_centerInParent="true"
+/>
 
-
-
-
-
-</TableLayout>
+</RelativeLayout>
