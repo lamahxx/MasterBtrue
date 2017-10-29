@@ -103,7 +103,9 @@ public class Parameters extends AppCompatActivity {
                 selectedLabel = dropdown.getSelectedItem().toString();
                 delete_selected_label(selectedLabel);
                 setFile();
-                dropdown.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+
+
             }
         };
         return v;
